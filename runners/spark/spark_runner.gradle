@@ -171,6 +171,7 @@ dependencies {
   provided "org.apache.spark:spark-sql_$spark_scala_version:$spark_version"
   provided "org.apache.spark:spark-streaming_$spark_scala_version:$spark_version"
   provided "org.apache.spark:spark-catalyst_$spark_scala_version:$spark_version"
+  provided "org.apache.spark:spark-kubernetes_$spark_scala_version:$spark_version"
   if(project.property("spark_scala_version").equals("2.11")){
     compileOnly "org.scala-lang:scala-library:2.11.12"
     runtimeOnly library.java.jackson_module_scala_2_11
