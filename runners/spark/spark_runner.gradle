@@ -165,33 +165,26 @@ dependencies {
   implementation library.java.vendored_grpc_1_43_2
   implementation library.java.vendored_guava_26_0_jre
   implementation "com.codahale.metrics:metrics-core:3.0.1"
-  provided "org.apache.spark:spark-core_$spark_scala_version:$spark_version"
-  provided "org.apache.spark:spark-network-common_$spark_scala_version:$spark_version"
-  permitUnusedDeclared "org.apache.spark:spark-network-common_$spark_scala_version:$spark_version"
-  provided "org.apache.spark:spark-sql_$spark_scala_version:$spark_version"
-  provided "org.apache.spark:spark-streaming_$spark_scala_version:$spark_version"
-  provided "org.apache.spark:spark-catalyst_$spark_scala_version:$spark_version"
-  provided "org.apache.spark:spark-kubernetes_$spark_scala_version:$spark_version"
-  if(project.property("spark_scala_version").equals("2.11")){
-    compileOnly "org.scala-lang:scala-library:2.11.12"
-    runtimeOnly library.java.jackson_module_scala_2_11
-  } else {
-    compileOnly "org.scala-lang:scala-library:2.12.15"
-    runtimeOnly library.java.jackson_module_scala_2_12
-  }
-  if (project.property("spark_version").equals("3.1.2")) {
-    compileOnly "org.apache.parquet:parquet-common:1.10.1"
-  }
+  compileOnly files("libs/spark-core_$spark_scala_version-${spark_version}.jar")
+  compileOnly files("libs/spark-network-common_$spark_scala_version-${spark_version}.jar")
+  permitUnusedDeclared files("libs/spark-network-common_$spark_scala_version-${spark_version}.jar")
+  compileOnly files("libs/spark-sql_$spark_scala_version-${spark_version}.jar")
+  compileOnly files("libs/spark-streaming_$spark_scala_version-${spark_version}.jar")
+  compileOnly files("libs/spark-catalyst_$spark_scala_version-${spark_version}.jar")
+  compileOnly files("libs/spark-kubernetes_$spark_scala_version-${spark_version}.jar")
+  compileOnly "org.scala-lang:scala-library:2.12.15"
+  runtimeOnly library.java.jackson_module_scala_2_12
+  compileOnly "org.apache.parquet:parquet-common:1.10.1"
   // Force paranamer 2.8 to avoid issues when using Scala 2.12
   runtimeOnly "com.thoughtworks.paranamer:paranamer:2.8"
   provided library.java.hadoop_common
   provided library.java.commons_io
   provided library.java.hamcrest
   provided "com.esotericsoftware:kryo-shaded:4.0.2"
-  testImplementation "org.apache.spark:spark-core_$spark_scala_version:$spark_version"
-  testImplementation "org.apache.spark:spark-network-common_$spark_scala_version:$spark_version"
-  testImplementation "org.apache.spark:spark-sql_$spark_scala_version:$spark_version"
-  testImplementation "org.apache.spark:spark-streaming_$spark_scala_version:$spark_version"
+  testImplementation files("libs/spark-core_$spark_scala_version-${spark_version}.jar")
+  testImplementation files("libs/spark-network-common_$spark_scala_version-${spark_version}.jar")
+  testImplementation files("libs/spark-sql_$spark_scala_version-${spark_version}.jar")
+  testImplementation files("libs/spark-streaming_$spark_scala_version-${spark_version}.jar")
   testImplementation project(":sdks:java:io:kafka")
   testImplementation project(path: ":sdks:java:core", configuration: "shadowTest")
   // SparkStateInternalsTest extends abstract StateInternalsTest
