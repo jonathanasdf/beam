@@ -51,13 +51,14 @@ var (
 
 	// Contract: https://s.apache.org/beam-fn-api-container-contract.
 
-	workerPool        = flag.Bool("worker_pool", false, "Run as worker pool (optional).")
-	id                = flag.String("id", "", "Local identifier (required).")
-	loggingEndpoint   = flag.String("logging_endpoint", "", "Logging endpoint (required).")
-	artifactEndpoint  = flag.String("artifact_endpoint", "", "Artifact endpoint (required).")
-	provisionEndpoint = flag.String("provision_endpoint", "", "Provision endpoint (required).")
-	controlEndpoint   = flag.String("control_endpoint", "", "Control endpoint (required).")
-	semiPersistDir    = flag.String("semi_persist_dir", "/tmp", "Local semi-persistent directory (optional).")
+	workerPool          = flag.Bool("worker_pool", false, "Run as worker pool (optional).")
+	containerExecutable = flag.String("container_executable", "/opt/apache/beam/boot", "Container executable for worker pool (optional).")
+	id                  = flag.String("id", "", "Local identifier (required).")
+	loggingEndpoint     = flag.String("logging_endpoint", "", "Logging endpoint (required).")
+	artifactEndpoint    = flag.String("artifact_endpoint", "", "Artifact endpoint (required).")
+	provisionEndpoint   = flag.String("provision_endpoint", "", "Provision endpoint (required).")
+	controlEndpoint     = flag.String("control_endpoint", "", "Control endpoint (required).")
+	semiPersistDir      = flag.String("semi_persist_dir", "/tmp", "Local semi-persistent directory (optional).")
 )
 
 const (
@@ -89,7 +90,7 @@ func main() {
 			"-m",
 			"apache_beam.runners.worker.worker_pool_main",
 			"--service_port=50000",
-			"--container_executable=/opt/apache/beam/boot",
+			fmt.Sprintf("--container_executable=%s", *containerExecutable),
 		}
 		log.Printf("Starting worker pool %v: python %v", workerPoolId, strings.Join(args, " "))
 		log.Fatalf("Python SDK worker pool exited: %v", execx.Execute("python", args...))
